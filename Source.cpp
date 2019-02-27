@@ -73,3 +73,40 @@ int Term::getVal(int xVal) {
 void Term::display() {
 	cout << "(" << coefficient << "," << exponent << ")";
 }
+
+int main() {
+	Term* t1 = new Term(2, 4);
+	Term* t2 = new Term(11, 4);
+	Term* t3 = new Term(3, 6);
+	Term temp;
+
+	cout << "First term: ";
+	t1->display();
+	cout << endl;
+
+	cout << "Second term: ";
+	t2->display();
+	cout << endl;
+
+	cout << "Third term: ";
+	t3->display();
+	cout << endl << endl;
+	
+	cout << "First term added with second term:" << endl;
+	temp = t1->add(*t2);
+	temp.display();
+	cout << endl << endl;
+
+	cout << "First term multiplied with third term:" << endl;
+	temp = t1->multiply(*t3);
+	temp.display();
+	cout << endl << endl;
+
+	cout << "All three terms multiplied:" << endl;
+	temp = temp.multiply(*t2);
+	temp.display();
+	cout << endl << endl;
+
+	system("pause");
+	return 0;
+}
