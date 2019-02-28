@@ -58,7 +58,7 @@ Term Term::add(Term t) {
 
 /* Multiplies this term with t and returns the product. */
 Term Term::multiply(Term t) {
-	return *new Term(coefficient*t.getCoefficient(), exponent+t.getExponent());
+	return Term(coefficient * t.getCoefficient(), exponent + t.getExponent());
 }
 
 /* Returns the value of the term for a given value of the variable x. */
@@ -73,6 +73,14 @@ int Term::getVal(int xVal) {
 void Term::display() {
 	cout << "(" << coefficient << "," << exponent << ")";
 }
+
+
+
+class Polynomial {
+
+};
+
+
 
 int main() {
 	Term* t1 = new Term(2, 4);
