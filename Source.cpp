@@ -14,20 +14,47 @@ template <class DT>
 class LinkedList {
 	protected:
 		DT* info;
-		LinkedList<DT> next;
+		LinkedList<DT>* next;
 	public:
 		LinkedList();
+		LinkedList(DT& info, LinkedList<DT>* next);
 		LinkedList(const LinkedList<DT>& obj);
 		virtual ~LinkedList();
 		LinkedList<DT> operator=(const LinkedList<DT>& obj);
 		LinkedList<DT> operator[](int index);
-		LinkedList<DT> next();
+		LinkedList<DT>* next();
 		DT& info();
 		int size();
 		void add(LinkedList<DT>& LL);
 		void remove();
 		void insert(int index);
 };
+
+template<class DT>
+LinkedList<DT>::LinkedList() {
+	info = NULL;
+	next = NULL;
+}
+
+template<class DT>
+LinkedList<DT>::LinkedList(DT& _info, LinkedList<DT>* _next) {
+	info = _info;
+	next = _next;
+}
+
+template<class DT>
+LinkedList<DT>::LinkedList(const LinkedList<DT>& obj) {
+	LinkedList<DT>* temp = new LinkedList(info, next);
+	info = obj.info();
+	next = temp;
+}
+
+template<class DT>
+LinkedList<DT>::~LinkedList() {
+	if (info == NULL) return;
+	delete info;
+	delete next;
+}
 
 
 /*
