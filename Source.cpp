@@ -10,11 +10,15 @@
 #include <iostream>
 using namespace std;
 
+/*
+ * LinkedList data structure. This class is a list of elements connected by
+ * pointing each element to the next one in the list. 
+ */
 template <class DT> 
 class LinkedList {
 	protected:
-		DT* info;
-		LinkedList<DT>* next;
+		DT* _info;
+		LinkedList<DT>* _next;
 	public:
 		LinkedList();
 		LinkedList(DT& info, LinkedList<DT>* next);
@@ -25,57 +29,88 @@ class LinkedList {
 		LinkedList<DT>* next();
 		DT& info();
 		int size();
-		void add(LinkedList<DT>& LL);
+		void add(LinkedList<DT>& obj);
 		void remove();
 		void insert(int index);
 };
 
-template<class DT>
-LinkedList<DT>::LinkedList() {
-	info = NULL;
-	next = NULL;
-}
-
-template<class DT>
-LinkedList<DT>::LinkedList(DT& _info, LinkedList<DT>* _next) {
-	info = _info;
-	next = _next;
-}
-
-template<class DT>
-LinkedList<DT>::LinkedList(const LinkedList<DT>& obj) {
-	LinkedList<DT>* temp = new LinkedList(info, next);
-	info = obj.info();
-	next = temp;
-}
-
-template<class DT>
-LinkedList<DT>::~LinkedList() {
-	if (info == NULL) return;
-	delete info;
-	delete next;
-}
-
-
 /*
- * This class represents a single term in a polynomial, such as Cx^e, where C 
+ * This class represents a single term in a polynomial, such as Cx^e, where C
  * is the coefficient, x is the variable, and e is the exponent.
  */
 class Term {
-	protected:
-		int coefficient;
-		int exponent;
-	public:
-		Term();
-		Term(int c, int e);
-		virtual ~Term();
-		int getCoefficient();
-		int getExponent();
-		Term add(Term t);
-		Term multiply(Term t);
-		int getVal(int xVal);
-		void display();
+protected:
+	int coefficient;
+	int exponent;
+public:
+	Term();
+	Term(int c, int e);
+	virtual ~Term();
+	int getCoefficient();
+	int getExponent();
+	Term add(Term t);
+	Term multiply(Term t);
+	int getVal(int xVal);
+	void display();
 };
+
+/* Default constructor - sets variables to NULL. */
+template <class DT>
+LinkedList<DT>::LinkedList() {
+	_info = NULL;
+	_next = NULL;
+}
+
+/* Non-default constructor - initializes variables to the given arguments. */
+template <class DT>
+LinkedList<DT>::LinkedList(DT& info, LinkedList<DT>* next) {
+	_info = info;
+	_next = next;
+}
+
+/* Copy constructor - creates a copy of the given LinkedList. */
+template <class DT>
+LinkedList<DT>::LinkedList(const LinkedList<DT>& obj) {
+	LinkedList<DT>* temp = new LinkedList(_info, _next);
+	_info = obj.info();
+	_next = temp;
+}
+
+/* Destructor - makes sure info isn't NULL and then deletes it and next. */
+template <class DT>
+LinkedList<DT>::~LinkedList() {
+	if (_info == NULL) return;
+	delete _info;
+	delete _next;
+}
+
+// operator=
+
+// operator[]
+
+template <class DT>
+LinkedList<DT>* LinkedList<DT>::next() {
+	return _next;
+}
+
+template <class DT>
+DT& LinkedList<DT>::info() {
+	return *_info;
+}
+
+template <class DT>
+int LinkedList<DT>::size() {
+	if (_info = NULL) return 0;
+	return 1 + next->size();
+}
+
+template <class DT>
+void LinkedList<DT>::add(LinkedList<DT>& obj) {
+	LinkedList<DT>* temp = new LinkedList(_info, _next);
+	_info = obj.info();
+	_next = temp;
+}
+
 
 /* Default constructor - sets coefficent and exponent to 0. */
 Term::Term() {
@@ -83,7 +118,7 @@ Term::Term() {
 	exponent = 0;
 }
 
-/* Non-default - sets coefficient and exponent to c and e, respectively. */
+/* Non-default Constructor - sets coefficient to c and exponent to e. */
 Term::Term(int c, int e) {
 	coefficient = c;
 	exponent = e;
