@@ -10,6 +10,26 @@
 #include <iostream>
 using namespace std;
 
+template <class DT> 
+class LinkedList {
+	protected:
+		DT* info;
+		LinkedList<DT> next;
+	public:
+		LinkedList();
+		LinkedList(const LinkedList<DT>& obj);
+		virtual ~LinkedList();
+		LinkedList<DT> operator=(const LinkedList<DT>& obj);
+		LinkedList<DT> operator[](int index);
+		LinkedList<DT> next();
+		DT& info();
+		int size();
+		void add(LinkedList<DT>& LL);
+		void remove();
+		void insert(int index);
+};
+
+
 /*
  * This class represents a single term in a polynomial, such as Cx^e, where C 
  * is the coefficient, x is the variable, and e is the exponent.
@@ -21,6 +41,7 @@ class Term {
 	public:
 		Term();
 		Term(int c, int e);
+		virtual ~Term();
 		int getCoefficient();
 		int getExponent();
 		Term add(Term t);
@@ -40,6 +61,9 @@ Term::Term(int c, int e) {
 	coefficient = c;
 	exponent = e;
 }
+
+/* Destructor. */
+Term::~Term() {}
 
 /* Returns the coefficient. */
 int Term::getCoefficient() {
@@ -73,14 +97,6 @@ int Term::getVal(int xVal) {
 void Term::display() {
 	cout << "(" << coefficient << "," << exponent << ")";
 }
-
-
-
-class Polynomial {
-
-};
-
-
 
 int main() {
 	Term* t1 = new Term(2, 4);
@@ -118,3 +134,7 @@ int main() {
 	system("pause");
 	return 0;
 }
+
+// what is virtual
+// whats the point in overloading = operator?
+// are we allowed to have previous in LinkedList class
