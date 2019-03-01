@@ -10,6 +10,9 @@
 #include <iostream>
 using namespace std;
 
+template <class DT>
+class OutOfBoundsException {};
+
 /*
  * LinkedList data structure. This class is a list of elements connected by
  * pointing each element to the next one in the list. 
@@ -29,9 +32,10 @@ class LinkedList {
 		LinkedList<DT>* next();
 		DT& info();
 		int size();
-		void add(LinkedList<DT>& obj);
+		void add(DT& info);
 		void remove();
-		void insert(int index);
+		void insert(int index, DT& info);
+		void removeAt(int index);
 };
 
 /*
@@ -68,7 +72,7 @@ LinkedList<DT>::LinkedList(DT& info, LinkedList<DT>* next) {
 	_next = next;
 }
 
-/* Copy constructor - creates a copy of the given LinkedList. */
+/* Copy constructor - creates a copy of the given linked list. */
 template <class DT>
 LinkedList<DT>::LinkedList(const LinkedList<DT>& obj) {
 	LinkedList<DT>* temp = new LinkedList(_info, _next);
@@ -88,29 +92,55 @@ LinkedList<DT>::~LinkedList() {
 
 // operator[]
 
+/* Returns the next element in the linked list. */
 template <class DT>
 LinkedList<DT>* LinkedList<DT>::next() {
 	return _next;
 }
 
+/* Returns the info of the element. */
 template <class DT>
 DT& LinkedList<DT>::info() {
 	return *_info;
 }
 
+/* Returns the size of the linked list. */
 template <class DT>
 int LinkedList<DT>::size() {
 	if (_info = NULL) return 0;
 	return 1 + next->size();
 }
 
+/* Adds a new element to the beginning of the list with the given info. */
 template <class DT>
-void LinkedList<DT>::add(LinkedList<DT>& obj) {
+void LinkedList<DT>::add(DT& info) {
 	LinkedList<DT>* temp = new LinkedList(_info, _next);
-	_info = obj.info();
+	_info = info;
 	_next = temp;
 }
 
+
+template <class DT>
+void LinkedList<DT>::remove() {
+	LinkedList<DT>* temp = _next;
+	_info = temp->info();
+	_next = temp->next();
+	temp->next() = NULL;
+	delete temp;
+}
+
+template <class DT>
+void LinkedList<DT>::insert(int index, DT& info) {
+	if (index == 0) add(info);
+	if (_info == NULL) throw OutOfBoundsException;
+	_next->insert(index - 1, info);
+}
+
+template <class DT>
+void LinkedList<DT>::removeAt(int index) {
+	if (index == 0) remove();
+	_next->removeAt(index - 1);
+}
 
 /* Default constructor - sets coefficent and exponent to 0. */
 Term::Term() {
