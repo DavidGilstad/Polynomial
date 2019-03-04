@@ -68,7 +68,7 @@ LinkedList<DT>::LinkedList() {
 /* Non-default constructor - initializes variables to the given arguments. */
 template <class DT>
 LinkedList<DT>::LinkedList(DT& info, LinkedList<DT>* next) {
-	_info = info;
+	_info = new DT(info);
 	_next = next;
 }
 
@@ -107,19 +107,19 @@ DT& LinkedList<DT>::info() {
 /* Returns the size of the linked list. */
 template <class DT>
 int LinkedList<DT>::size() {
-	if (_info = NULL) return 0;
-	return 1 + next->size();
+	if (_info == NULL) return 0;
+	return 1 + _next->size();
 }
 
 /* Adds a new element to the beginning of the list with the given info. */
 template <class DT>
 void LinkedList<DT>::add(DT& info) {
-	LinkedList<DT>* temp = new LinkedList(_info, _next);
-	_info = info;
+	LinkedList<DT>* temp = new LinkedList(*_info, _next);
+	_info = new DT(info);
 	_next = temp;
 }
 
-
+/* Removes the first element in the linked list. */
 template <class DT>
 void LinkedList<DT>::remove() {
 	LinkedList<DT>* temp = _next;
@@ -129,6 +129,7 @@ void LinkedList<DT>::remove() {
 	delete temp;
 }
 
+/* Adds the given element to the specified index in the linked list. */
 template <class DT>
 void LinkedList<DT>::insert(int index, DT& info) {
 	if (index == 0) add(info);
@@ -136,6 +137,7 @@ void LinkedList<DT>::insert(int index, DT& info) {
 	_next->insert(index - 1, info);
 }
 
+/* Removes the element at the specified index. */
 template <class DT>
 void LinkedList<DT>::removeAt(int index) {
 	if (index == 0) remove();
@@ -191,37 +193,13 @@ void Term::display() {
 }
 
 int main() {
-	Term* t1 = new Term(2, 4);
-	Term* t2 = new Term(11, 4);
-	Term* t3 = new Term(3, 6);
-	Term temp;
+	int info1 = 10, info2 = 20, info3 = 25;
+	LinkedList<int>* L1 = new LinkedList<int>(info1, new LinkedList<int>());
 
-	cout << "First term: ";
-	t1->display();
-	cout << endl;
+	L1->add(info2);
+	L1->add(info3);
 
-	cout << "Second term: ";
-	t2->display();
-	cout << endl;
-
-	cout << "Third term: ";
-	t3->display();
-	cout << endl << endl;
-	
-	cout << "First term added with second term:" << endl;
-	temp = t1->add(*t2);
-	temp.display();
-	cout << endl << endl;
-
-	cout << "First term multiplied with third term:" << endl;
-	temp = t1->multiply(*t3);
-	temp.display();
-	cout << endl << endl;
-
-	cout << "All three terms multiplied:" << endl;
-	temp = temp.multiply(*t2);
-	temp.display();
-	cout << endl << endl;
+	cout << L1->size() << endl;
 
 	system("pause");
 	return 0;
@@ -229,4 +207,4 @@ int main() {
 
 // what is virtual
 // whats the point in overloading = operator?
-// are we allowed to have previous in LinkedList class
+// are we allowecdffgd to have previous in LinkedList class
